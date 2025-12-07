@@ -2,7 +2,7 @@ import google.generativeai as genai
 import json
 from datetime import date
 
-GOOGLE_API_KEY = "api_keyy"
+GOOGLE_API_KEY = "api key will be pasted hereee"
 
 def parse_expense_with_ai(user_text):
     """
