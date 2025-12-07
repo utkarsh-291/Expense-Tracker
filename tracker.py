@@ -25,7 +25,7 @@ def get_user_input():
     try:
         amount = float(input("Enter Amount: "))
     except ValueError:
-        print("❌ Invalid amount. Setting to 0.")
+        print("Invalid amount. Setting to 0.")
         amount = 0.0
 
     description = input("Enter Description (Optional): ")
@@ -35,7 +35,7 @@ def get_user_input():
 def view_expenses():
     expenses = database.get_all_expenses()
     if not expenses:
-        print("\n📭 No expenses found yet.")
+        print("\nNo expenses found yet.")
         return
 
     print("\n" + "="*50)
@@ -57,7 +57,7 @@ def delete_expense_ui():
         else:
             print("Operation cancelled.")
     except ValueError:
-        print("❌ Invalid ID. Please enter a number.")
+        print("Invalid ID. Please enter a number.")
 
 def update_expense_ui():
     """UI flow for updating an expense."""
@@ -68,13 +68,13 @@ def update_expense_ui():
         data = get_user_input() 
         database.update_expense(ex_id, data[0], data[1], data[2], data[3])
     except ValueError:
-        print("❌ Invalid ID. Please enter a number.")
+        print("Invalid ID. Please enter a number.")
 
 def main():
     database.initialize_db()
 
     while True:
-        print("\n💰 EXPENSE TRACKER MENU")
+        print("\nEXPENSE TRACKER MENU")
         print("1. Add Expense")
         print("2. View All Expenses")
         print("3. Delete Expense")
@@ -101,7 +101,7 @@ def main():
             analysis.generate_analysis()
         
         elif choice == '6':
-            print("Goodbye! 👋")
+            print("Goodbye!")
             break
         else:
             print("Invalid choice. Try again.")

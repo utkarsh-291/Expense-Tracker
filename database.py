@@ -6,7 +6,7 @@ DB_NAME = "expenses.db"
 def get_connection():
     """Connects to the database and ensures rows act like dictionaries."""
     conn = sqlite3.connect(DB_NAME)
-    conn.row_factory = sqlite3.Row  # Allows accessing data by column name
+    conn.row_factory = sqlite3.Row 
     return conn
 
 def initialize_db():
@@ -33,9 +33,9 @@ def add_expense(date, category, amount, description):
             VALUES (?, ?, ?, ?)
         ''', (date, category, amount, description))
         conn.commit()
-        print("✅ Expense added successfully!")
+        print("Expense added successfully!")
     except Exception as e:
-        print(f"❌ Error adding expense: {e}")
+        print(f"Error adding expense: {e}")
     finally:
         conn.close()
 
@@ -54,11 +54,11 @@ def delete_expense(expense_id):
         conn.commit()
         # cursor.rowcount tells us how many rows were affected
         if cursor.rowcount > 0:
-            print("✅ Expense deleted successfully!")
+            print("Expense deleted successfully!")
         else:
-            print("❌ Error: ID not found.")
+            print("Error: ID not found.")
     except Exception as e:
-        print(f"❌ Error deleting expense: {e}")
+        print(f"Error deleting expense: {e}")
     finally:
         conn.close()
 
@@ -73,10 +73,10 @@ def update_expense(expense_id, date, category, amount, description):
         ''', (date, category, amount, description, expense_id))
         conn.commit()
         if cursor.rowcount > 0:
-            print("✅ Expense updated successfully!")
+            print("Expense updated successfully!")
         else:
-            print("❌ Error: ID not found.")
+            print("Error: ID not found.")
     except Exception as e:
-        print(f"❌ Error updating expense: {e}")
+        print(f"Error updating expense: {e}")
     finally:
         conn.close()

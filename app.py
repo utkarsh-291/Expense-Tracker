@@ -3,20 +3,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import database
 
-# Page Config
 st.set_page_config(page_title="Personal Finance Tracker", layout="wide")
 
 def main():
-    st.title("💰 Personal Finance Analytics Dashboard")
+    st.title("Personal Finance Analytics Dashboard")
     
-    # Initialize DB (Your existing function)
     database.initialize_db()
 
-    # Sidebar Navigation - REMOVED "AI Assistant"
     menu = ["Add Expense", "View Data", "Analytics", "Manage"]
     choice = st.sidebar.selectbox("Menu", menu)
 
-    # --- ADD EXPENSE SECTION ---
     if choice == "Add Expense":
         st.subheader("Add a New Transaction")
         col1, col2 = st.columns(2)
@@ -33,19 +29,16 @@ def main():
             database.add_expense(date, category, amount, description)
             st.success(f"✅ Added {category} expense of ${amount}!")
 
-    # --- VIEW DATA SECTION ---
     elif choice == "View Data":
         st.subheader("Transaction History")
         rows = database.get_all_expenses()
         
         if rows:
-            # Convert to DataFrame for a nice interactive table
             df = pd.DataFrame([dict(row) for row in rows])
             st.dataframe(df, use_container_width=True)
         else:
             st.info("No expenses found. Add some first!")
 
-    # --- ANALYTICS SECTION ---
     elif choice == "Analytics":
         st.subheader("Spending Analysis")
         conn = database.get_connection()
@@ -85,7 +78,6 @@ def main():
         else:
             st.warning("Not enough data to generate analysis.")
 
-    # --- MANAGE SECTION ---
     elif choice == "Manage":
         st.subheader("Manage Expenses")
         rows = database.get_all_expenses()
