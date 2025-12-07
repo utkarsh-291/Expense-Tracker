@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import database
+import ai_helper
 
 st.set_page_config(page_title="Personal Finance Tracker", layout="wide")
 
@@ -10,7 +11,7 @@ def main():
     
     database.initialize_db()
 
-    menu = ["Add Expense", "View Data", "Analytics", "Manage"]
+    menu = ["Add Expense", "AI Assistant", "View Data", "Analytics", "Manage"]    
     choice = st.sidebar.selectbox("Menu", menu)
 
     if choice == "Add Expense":
@@ -27,7 +28,34 @@ def main():
 
         if st.button("Add Expense"):
             database.add_expense(date, category, amount, description)
-            st.success(f"✅ Added {category} expense of ${amount}!")
+            st.success(f"Added {category} expense of ${amount}!")
+
+    elif choice == "AI Assistant":
+        st.subheader("AI Smart Add")
+        st.write("Type naturally, e.g., *'I spent 500 rupees on pizza yesterday'*")
+        
+        user_text = st.text_input("Tell the AI about your expense:")
+        
+        if st.button("Parse with AI"):
+            if user_text:
+                with st.spinner("AI is thinking..."):
+                    data, error = ai_helper.parse_expense_with_ai(user_text)
+                
+                if error:
+                    st.error(error)
+                else:
+                    st.success("AI extracted the details!")
+                    st.json(data) 
+                    st.session_state['ai_data'] = data
+            else:
+                st.warning("Please enter some text.")
+
+        if 'ai_data' in st.session_state:
+            data = st.session_state['ai_data']
+            if st.button("Confirm & Save to DB"):
+                database.add_expense(data['date'], data['category'], data['amount'], data['description'])
+                st.success("Saved successfully!")
+                del st.session_state['ai_data']
 
     elif choice == "View Data":
         st.subheader("Transaction History")
