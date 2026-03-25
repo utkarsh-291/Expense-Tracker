@@ -4,13 +4,12 @@ from datetime import datetime
 DB_NAME = "expenses.db"
 
 def get_connection():
-    """Connects to the database and ensures rows act like dictionaries."""
+    """rows act like -> dictionaries here because of row_factory"""
     conn = sqlite3.connect(DB_NAME)
     conn.row_factory = sqlite3.Row 
     return conn
 
 def initialize_db():
-    """Creates the table if it doesn't exist."""
     conn = get_connection()
     conn.execute('''
         CREATE TABLE IF NOT EXISTS expenses (
@@ -25,7 +24,6 @@ def initialize_db():
     conn.close()
 
 def add_expense(date, category, amount, description):
-    """Inserts a new expense into the database."""
     conn = get_connection()
     try:
         conn.execute('''
@@ -40,7 +38,6 @@ def add_expense(date, category, amount, description):
         conn.close()
 
 def get_all_expenses():
-    """Fetches all expenses, sorted by newest first."""
     conn = get_connection()
     rows = conn.execute('SELECT * FROM expenses ORDER BY date DESC').fetchall()
     conn.close()

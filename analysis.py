@@ -10,13 +10,14 @@ def generate_analysis():
     conn.close()
 
     if df.empty:
-        print("\nNo data available to analyze yet. Add some expenses first!")
+        print()
+        print("No data available to analyze yet. Add some expenses first!")
         return
 
     df['date'] = pd.to_datetime(df['date'])
 
     print("\n" + "="*40)
-    print("📊 EXPENSE ANALYSIS REPORT")
+    print(" EXPENSE ANALYSIS REPORT")
     print("="*40)
 
     total_spent = df['amount'].sum()
@@ -34,15 +35,13 @@ def generate_analysis():
     print(category_stats.to_string())
     print("-" * 40)
 
-    # 4. Visualization (Pie Chart)
     user_choice = input("\nDo you want to see a graph? (y/n): ")
     if user_choice.lower() == 'y':
-        print("🎨 Opening Pie Chart...")
+        print(" Opening Pie Chart...")
         
         plt.figure(figsize=(8, 6))
-        # Create a pie chart using the category stats we calculated above
         plt.pie(category_stats, labels=category_stats.index, autopct='%1.1f%%', startangle=140)
         plt.title(f'Total Expenses: ${total_spent:,.2f}')
-        plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+        plt.axis('equal')
         
         plt.show()

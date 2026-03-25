@@ -79,7 +79,7 @@ def main():
         print("2. View All Expenses")
         print("3. Delete Expense")
         print("4. Update Expense")
-        print("5. 📊 Data Analysis")
+        print("5. Data Analysis")
         print("6. Exit")
         
         choice = input("Choose an option: ")
